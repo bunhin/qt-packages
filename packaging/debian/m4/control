@@ -1,0 +1,28 @@
+dnl This gets processed by m4.
+dnl Macros:
+dnl   PACKAGE_NAME
+dnl   PACKAGE_VERSION
+dnl   BINARY
+dnl   BINARY_TARGET
+dnl   CLIENT
+dnl   SERVER
+Source: PACKAGE_NAME
+Section: database
+Priority: optional
+Maintainer: Package Maintainer <packaging@xtuple.com>
+define(`BASE_DEPENDS',`Build-Depends: libqt4-dev, qt4-qmake, g++ gcc m4')dnl
+Homepage: http://www.xtuple.com
+ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')
+')dnl
+Package: PACKAGE_NAME
+Version: PACKAGE_VERSION
+Architecture: ifelse(BINARY, 1,`BINARY_TARGET`,`i386 amd64 powerpc')
+Depends: libgcc1
+ifelse(CLIENT, 0, `, libpq5 libqt4-core libqt4-core libqt4-designer libqt4-gui libqt4-help libqt4-network libqt4-script libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns', `')`'dnl
+ifelse(SERVER, 0, `, postgresql', `')
+Breaks: PACKAGE_NAME (<< PACKAGE_VERSION)
+Conflicts: PACKAGE_NAME (<< PACKAGE_VERSION)
+Provides: PACKAGE_NAME
+ifelse(BINARY, 1, `Installed-Size: DISK_SIZE', `')dnl
+Description: xTuple provides integrated ERP and CRM functionality in a single cross-platform product.
+
