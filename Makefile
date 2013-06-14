@@ -9,7 +9,7 @@ openrpt/Makefile:
 csvimp/Makefile: openrpt/bin/openrpt
 	cd csvimp && qmake ;
 
-xtuple/Makefile: csvimp/csvimp openrpt/bin/openrpt
+qt-client/Makefile: csvimp/csvimp openrpt/bin/openrpt
 	cd xtuple && qmake ;
 
 openrpt/bin/openrpt: openrpt/Makefile
@@ -18,7 +18,7 @@ openrpt/bin/openrpt: openrpt/Makefile
 csvimp/csvimp: csvimp/Makefile openrpt/bin/openrpt
 	cd csvimp && make ;
 
-xtuple/bin/xtuple: xtuple/Makefile csvimp/csvimp openrpt/bin/openrpt
+qt-client/bin/xtuple: xtuple/Makefile csvimp/csvimp openrpt/bin/openrpt
 	cd xtuple && make ;
 
 all: openrpt/bin/openrpt csvimp/csvimp xtuple/bin/xtuple
@@ -34,7 +34,7 @@ debian:
 
 install: $(DESTDIR)/$(PREFIX)/bin/xtuple.bin $(DESTDIR)/$(PREFIX)/bin/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so
 
-xtuple/widgets/libxtuplewidgets.so: xtuple/bin/xtuple
+qt-client/widgets/libxtuplewidgets.so: xtuple/bin/xtuple
 # This dependency is to redirect and to consolidate the generation function. libxtuplewidgets may in practice be a prerequisite for the xtuple binary.
 
 $(DESTDIR)/$(PREFIX):
@@ -54,10 +54,10 @@ $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so: csvimp/plugins/libcsvimpplugin.so
 
 $(DESTDIR)/$(PREFIX)/share/xtuple/XTupleGUIClient.qhc:
 
-xtuple/share/XTupleGUIClient.qhc: xtuple/share/XTupleGUIClient.qhcp
+qt-client/share/XTupleGUIClient.qhc: xtuple/share/XTupleGUIClient.qhcp
 	cd share && qcollectiongenerator -o XTupleGUIClient.qhc XTupleGUIClient.qhcp ;
 
-xtuple/share/dict/welcome/wmsg.base.qm: xtuple/share/dict/welcome/wmsg.base.ts
+qt-client/share/dict/welcome/wmsg.base.qm: xtuple/share/dict/welcome/wmsg.base.ts
 	cd xtuple/share/dict/welcome ; lrelease *.ts ;
 
 # Frank knew that adding the following three targets was a bad idea . But he did it anyway .
