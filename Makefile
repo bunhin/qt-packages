@@ -40,7 +40,7 @@ qt-client/widgets/libxtuplewidgets.so: qt-client/bin/xtuple
 $(DESTDIR)/$(PREFIX)/bin:
 	mkdir -p $(DESTDIR)/$(PREFIX)/bin ;
 
-$(DESTDIR)/$(PREFIX)/bin:
+$(DESTDIR)/$(PREFIX)/lib:
 	mkdir -p $(DESTDIR)/$(PREFIX)/lib ;
 
 $(DESTDIR)/$(PREFIX)/bin/xtuple.bin: $(DESTDIR)/$(PREFIX)/bin xtuple/bin/xtuple
