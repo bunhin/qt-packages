@@ -12,7 +12,7 @@ csvimp/Makefile: openrpt/bin/openrpt
 	cd csvimp && qmake ;
 
 qt-client/Makefile: csvimp/csvimp openrpt/bin/openrpt
-	cd xtuple && qmake ;
+	cd qt-client && qmake ;
 
 openrpt/bin/openrpt: openrpt/Makefile
 	cd openrpt && make ;
@@ -21,7 +21,7 @@ csvimp/csvimp: csvimp/Makefile openrpt/bin/openrpt
 	cd csvimp && make ;
 
 qt-client/bin/xtuple: qt-client/Makefile csvimp/csvimp openrpt/bin/openrpt
-	cd xtuple && make ;
+	cd qt-client && make ;
 
 pkgstage:
 	mkdir pkgstage ;
