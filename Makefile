@@ -3,6 +3,8 @@
 PREFIX?=/usr
 INT_PREFIX:=$(PREFIX)
 
+all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple
+
 openrpt/Makefile:
 	cd openrpt && qmake ;
 
@@ -20,8 +22,6 @@ csvimp/csvimp: csvimp/Makefile openrpt/bin/openrpt
 
 qt-client/bin/xtuple: qt-client/Makefile csvimp/csvimp openrpt/bin/openrpt
 	cd xtuple && make ;
-
-all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple
 
 pkgstage:
 	mkdir pkgstage ;
