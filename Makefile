@@ -18,10 +18,10 @@ openrpt/bin/openrpt: openrpt/Makefile
 csvimp/csvimp: csvimp/Makefile openrpt/bin/openrpt
 	cd csvimp && make ;
 
-qt-client/bin/xtuple: xtuple/Makefile csvimp/csvimp openrpt/bin/openrpt
+qt-client/bin/xtuple: qt-client/Makefile csvimp/csvimp openrpt/bin/openrpt
 	cd xtuple && make ;
 
-all: openrpt/bin/openrpt csvimp/csvimp xtuple/bin/xtuple
+all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple
 
 pkgstage:
 	mkdir pkgstage ;
@@ -34,33 +34,34 @@ debian:
 
 install: $(DESTDIR)/$(PREFIX)/bin/xtuple.bin $(DESTDIR)/$(PREFIX)/bin/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so
 
-qt-client/widgets/libxtuplewidgets.so: xtuple/bin/xtuple
+qt-client/widgets/libxtuplewidgets.so: qt-client/bin/xtuple
 # This dependency is to redirect and to consolidate the generation function. libxtuplewidgets may in practice be a prerequisite for the xtuple binary.
 
-$(DESTDIR)/$(PREFIX):
-	mkdir -p $(DESTDIR)/$(PREFIX) ;
+$(DESTDIR)/$(PREFIX)/bin:
+	mkdir -p $(DESTDIR)/$(PREFIX)/bin ;
 
-$(DESTDIR)/$(PREFIX)/bin/xtuple.bin: xtuple/bin/xtuple
+$(DESTDIR)/$(PREFIX)/bin:
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib ;
+
+$(DESTDIR)/$(PREFIX)/bin/xtuple.bin: $(DESTDIR)/$(PREFIX)/bin xtuple/bin/xtuple
 	install -m 755 -T xtuple/bin/xtuple $(DESTDIR)/$(PREFIX)/bin/xtuple.bin ;
 
-$(DESTDIR)/$(PREFIX)/bin/openrpt.bin: openrpt/bin/xtuple
+$(DESTDIR)/$(PREFIX)/bin/openrpt.bin: $(DESTDIR)/$(PREFIX)/bin openrpt/bin/openrpt
 	install -m 755 -T openrpt/bin/openrpt $(DESTDIR)/$(PREFIX)/bin/openrpt.bin ;
 
-$(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so: widgets/libxtuplewidgets.so
+$(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so: $(DESTDIR)/$(PREFIX)/lib widgets/libxtuplewidgets.so
 	install -m 755 -T widgets/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so
 
-$(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so: csvimp/plugins/libcsvimpplugin.so
+$(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so: $(DESTDIR)/$(PREFIX)/lib csvimp/plugins/libcsvimpplugin.so
 	install -m 755 -T csvimp/plugins/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so
 
-$(DESTDIR)/$(PREFIX)/share/xtuple/XTupleGUIClient.qhc:
+$(DESTDIR)/$(PREFIX)/share/xtuple/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhc
 
 qt-client/share/XTupleGUIClient.qhc: xtuple/share/XTupleGUIClient.qhcp
 	cd share && qcollectiongenerator -o XTupleGUIClient.qhc XTupleGUIClient.qhcp ;
 
 qt-client/share/dict/welcome/wmsg.base.qm: xtuple/share/dict/welcome/wmsg.base.ts
 	cd xtuple/share/dict/welcome ; lrelease *.ts ;
-
-# Frank knew that adding the following three targets was a bad idea . But he did it anyway .
 
 install-deb:
 	$(MAKE) PREFIX=$(INT_PREFIX) DESTDIR=pkgstage/debian install ;
