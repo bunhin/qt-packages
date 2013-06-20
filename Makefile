@@ -4,18 +4,18 @@ PREFIX?=/usr
 INT_PREFIX:=$(PREFIX)
 
 VERSION_TRAILER:=
-ifneq($(UBUNTU_RELEASE),)
+ifneq ($(UBUNTU_RELEASE),)
 VERSION_TRAILER:=0ubuntu1~$(UBUNTU_RELEASE)
 endif
 PRODUCT_NAME:=xtuple-client
-PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$//g')
+PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
 PACKAGE_VERSION:=$(PRODUCT_VERSION)$(VERSION_TRAILER)
-CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S"`")
+CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -500
 PACKAGER_NAME:="xTuple Packaging"
 PACKAGER_MAIL:="packaging@xtuple.com"
 
-DEB_CHANGELOG_FILE="debian/changelog" ;
+DEB_CHANGELOG_FILE="debian/changelog"
 
 all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple
 
@@ -87,14 +87,14 @@ $(DEB_CHANGELOG_FILE): debian qt-client/guiclient/version.cpp
 	echo "" >> "$(DEB_CHANGELOG_FILE)" ;
 	echo " -- ""$(PACKAGER_NAME)"" <""$(PACKAGER_MAIL)"">  ""$(CHANGELOG_TIMESTAMP)" >> "$(DEB_CHANGELOG_FILE)" ;
 
-deb-bin-control: debian $(CHANGELOG_FILE)
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$file" > debian/"`basename "$file"`" ;
-	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$file"`" ;
+deb-bin-control: debian debian/changelog
+	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src-control: debian
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$file" > debian/"`basename "$file"`" ;
-	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$file"`" ;
-	for file in packaging/debian/cp-src/* ; do cp -pRP "$file" debian/"`basename "$file"`" ;
+	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/cp/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src: deb-src-control
 	yes | debuild -S -sa ;
