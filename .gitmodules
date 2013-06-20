@@ -7,3 +7,6 @@
 [submodule "csvimp"]
 	path = csvimp
 	url = https://github.com/xtuple/csvimp
+[submodule "updater"]
+	path = updater
+	url = https://github.com/xtuple/updater
