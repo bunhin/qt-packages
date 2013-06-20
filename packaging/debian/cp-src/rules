@@ -8,7 +8,7 @@ clean:
 install: build
 	dh_clean
 	dh_installdirs
-	$(MAKE) install
+	$(MAKE) DESTDIR=$(CURDIR)/debian/$(pkgname) install
 
 build:
 	$(MAKE)
