@@ -16,8 +16,8 @@ ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-de
 ')dnl
 Package: PACKAGE_NAME
 Version: PACKAGE_VERSION
-Architecture: ifelse(BINARY, 1,`BINARY_TARGET`,`i386 amd64 powerpc')
-Depends: libgcc1
+Architecture: ifelse(BINARY, 1,`BINARY_TARGET',`i386 amd64 powerpc')
+Depends: libgcc1`'dnl
 ifelse(CLIENT, 0, `, libpq5 libqt4-core libqt4-core libqt4-designer libqt4-gui libqt4-help libqt4-network libqt4-script libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns', `')`'dnl
 ifelse(SERVER, 0, `, postgresql', `')
 Breaks: PACKAGE_NAME (<< PACKAGE_VERSION)
