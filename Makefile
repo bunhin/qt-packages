@@ -13,7 +13,7 @@ PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
 DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(DEB_VERSION_TRAILER)
 CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
-CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -500
+CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -0500
 PACKAGER_NAME:=xTuple Packaging
 PACKAGER_MAIL:=packaging@xtuple.com
 
