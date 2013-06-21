@@ -12,7 +12,8 @@ Priority: optional
 Maintainer: Package Maintainer <packaging@xtuple.com>
 define(`BASE_DEPENDS',`Build-Depends: libqt4-dev, qt4-qmake, g++ gcc m4')dnl
 Homepage: http://www.xtuple.com
-ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')
+ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')')dnl
+ifelse(BINARY, 1, `',`
 ')dnl
 Package: PACKAGE_NAME
 Version: PACKAGE_VERSION
