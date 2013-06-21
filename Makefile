@@ -3,18 +3,19 @@
 PREFIX?=/usr
 INT_PREFIX:=$(PREFIX)
 
-VERSION_TRAILER:=
+DEB_VERSION_TRAILER:=
 ifneq ($(UBUNTU_RELEASE),)
-VERSION_TRAILER:=0ubuntu1~$(UBUNTU_RELEASE)
+DEB_VERSION_TRAILER:=0ubuntu1~$(UBUNTU_RELEASE)
+DEB_OS_RELEASE:=$(UBUNTU_RELEASE)
 endif
 PRODUCT_NAME:=xtuple-client
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
-PACKAGE_VERSION:=$(PRODUCT_VERSION)$(VERSION_TRAILER)
+DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)$(DEB_VERSION_TRAILER)
 CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -500
-PACKAGER_NAME:="xTuple Packaging"
-PACKAGER_MAIL:="packaging@xtuple.com"
+PACKAGER_NAME:=xTuple Packaging
+PACKAGER_MAIL:=packaging@xtuple.com
 
 DEB_CHANGELOG_FILE=debian/changelog
 
