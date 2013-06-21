@@ -1,4 +1,4 @@
-.PHONY: all deb-src deb-src-control deb-bin-control deb-bin deb
+.PHONY: all deb-src deb-src-control deb-bin-control deb-bin deb clean
 
 PREFIX?=/usr
 INT_PREFIX:=$(PREFIX)
@@ -19,6 +19,12 @@ PACKAGER_MAIL:="packaging@xtuple.com"
 DEB_CHANGELOG_FILE=debian/changelog
 
 all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple updater/bin/updater
+
+clean:
+	cd openrpt && make clean || echo No Makefile. ;
+	cd csvimp && make clean || echo No Makefile. ;
+	cd qt-client && make clean || echo No Makefile. ;
+	cd updater && make clean || echo No Makefile. ;
 
 openrpt/Makefile:
 	cd openrpt && qmake ;
