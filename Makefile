@@ -11,7 +11,7 @@ endif
 PRODUCT_NAME:=xtuple-client
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
-DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)$(DEB_VERSION_TRAILER)
+DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(DEB_VERSION_TRAILER)
 CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -500
 PACKAGER_NAME:=xTuple Packaging
@@ -105,11 +105,11 @@ $(DEB_CHANGELOG_FILE): debian qt-client/guiclient/version.cpp
 	echo " -- ""$(PACKAGER_NAME)"" <""$(PACKAGER_MAIL)"">  ""$(CHANGELOG_TIMESTAMP)" >> "$(DEB_CHANGELOG_FILE)" ;
 
 deb-bin-control: debian $(DEB_CHANGELOG_FILE)
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src-control: debian $(DEB_CHANGELOG_FILE)
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
@@ -120,5 +120,4 @@ deb-bin: install-deb
 
 deb: deb-bin
 
-changelog:
 	
