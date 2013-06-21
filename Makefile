@@ -16,7 +16,7 @@ CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -500
 PACKAGER_NAME:="xTuple Packaging"
 PACKAGER_MAIL:="packaging@xtuple.com"
 
-DEB_CHANGELOG_FILE="debian/changelog"
+DEB_CHANGELOG_FILE=debian/changelog
 
 all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple updater/bin/updater
 
@@ -97,11 +97,11 @@ $(DEB_CHANGELOG_FILE): debian qt-client/guiclient/version.cpp
 	echo "" >> "$(DEB_CHANGELOG_FILE)" ;
 	echo " -- ""$(PACKAGER_NAME)"" <""$(PACKAGER_MAIL)"">  ""$(CHANGELOG_TIMESTAMP)" >> "$(DEB_CHANGELOG_FILE)" ;
 
-deb-bin-control: debian debian/changelog
+deb-bin-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$$file"`" ; done ;
 
-deb-src-control: debian debian/changelog
+deb-src-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
