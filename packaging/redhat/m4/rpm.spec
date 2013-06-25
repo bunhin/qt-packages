@@ -15,7 +15,8 @@ Vendor: xTuple
 URL: http://www.xtuple.com
 Packager: xTuple Packaging <packaging@xtuple.com>
 Requires: libgcc1`'dnl
-ifelse(CLIENT, 0, `, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns', `')`'dnl
+ifelse(CLIENT, 1, `, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns', `')`'dnl
+ifelse(SERVER, 1, `, postgresql', `')
 
 %description
 xTuple is an ERP system.
