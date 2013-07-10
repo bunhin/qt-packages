@@ -60,7 +60,7 @@ pkgstage/debian: pkgstage
 debian:
 	mkdir -p debian ;
 
-install: $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm: $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm
+install: $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm
 
 $(DESTDIR)/$(PREFIX)/bin:
 	mkdir -p $(DESTDIR)/$(PREFIX)/bin ;
