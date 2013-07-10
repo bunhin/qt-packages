@@ -34,7 +34,7 @@ csvimp/Makefile: openrpt/bin/openrpt
 	cd csvimp && qmake ;
 
 qt-client/Makefile: csvimp/csvimp openrpt/bin/openrpt
-	cd qt-client && qmake ;
+	cd qt-client && ( for dir in openrpt csvimp xtlib ; do if [ -e "$$dir" ] && [ ! -e "$$dir"/* ] ; then rmdir "$$dir" ; fi ; done ; ) && qmake ;
 
 updater/Makefile: openrpt/bin/openrpt qt-client/bin/xtuple
 	cd updater && qmake ;
