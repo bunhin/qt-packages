@@ -1,4 +1,4 @@
-.PHONY: all deb-src deb-src-control deb-bin-control deb-bin deb clean
+.PHONY: all deb-src deb-src-control deb-bin-control deb-bin deb clean install install-deb
 
 PREFIX?=/usr
 INT_PREFIX:=$(PREFIX)
@@ -60,10 +60,7 @@ pkgstage/debian: pkgstage
 debian:
 	mkdir -p debian ;
 
-install: $(DESTDIR)/$(PREFIX)/bin/xtuple.bin $(DESTDIR)/$(PREFIX)/bin/openrpt.bin $(DESTDIR)/$(PREFIX)/bin/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so
-
-qt-client/widgets/libxtuplewidgets.so: qt-client/bin/xtuple
-# This dependency is to redirect and to consolidate the generation function. libxtuplewidgets may in practice be a prerequisite for the xtuple binary.
+install: $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm: $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm
 
 $(DESTDIR)/$(PREFIX)/bin:
 	mkdir -p $(DESTDIR)/$(PREFIX)/bin ;
@@ -71,22 +68,38 @@ $(DESTDIR)/$(PREFIX)/bin:
 $(DESTDIR)/$(PREFIX)/lib:
 	mkdir -p $(DESTDIR)/$(PREFIX)/lib ;
 
-$(DESTDIR)/$(PREFIX)/bin/xtuple.bin: $(DESTDIR)/$(PREFIX)/bin qt-client/bin/xtuple
-	install -m 755 -T qt-client/bin/xtuple $(DESTDIR)/$(PREFIX)/bin/xtuple.bin ;
+$(DESTDIR)/$(PREFIX)/lib/xtuple:
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/xtuple ;
 
-$(DESTDIR)/$(PREFIX)/bin/openrpt.bin: $(DESTDIR)/$(PREFIX)/bin openrpt/bin/openrpt
-	install -m 755 -T openrpt/bin/openrpt $(DESTDIR)/$(PREFIX)/bin/openrpt.bin ;
+$(DESTDIR)/$(PREFIX)/lib/xtuple/welcome:
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome ;
 
-$(DESTDIR)/$(PREFIX)/bin/xtuple-updater.bin: $(DESTDIR)/$(PREFIX)/bin updater/bin/updater
-	install -m 755 -T updater/bin/updater $(DESTDIR)/$(PREFIX)/bin/xtuple-updater.bin ;
+$(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin: $(DESTDIR)/$(PREFIX)/lib/xtuple qt-client/bin/xtuple
+	install -m 755 -T qt-client/bin/xtuple $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin ;
 
-$(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so: $(DESTDIR)/$(PREFIX)/lib qt-client/widgets/libxtuplewidgets.so
-	install -m 755 -T qt-client/widgets/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/libxtuplewidgets.so
+$(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin: $(DESTDIR)/$(PREFIX)/lib/xtuple openrpt/bin/openrpt
+	install -m 755 -T openrpt/bin/openrpt $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin ;
 
-$(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so: $(DESTDIR)/$(PREFIX)/lib csvimp/plugins/libcsvimpplugin.so
-	install -m 755 -T csvimp/plugins/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/libcsvimpplugin.so
+$(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin: $(DESTDIR)/$(PREFIX)/lib/xtuple updater/bin/updater
+	install -m 755 -T updater/bin/updater $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin ;
 
-$(DESTDIR)/$(PREFIX)/share/xtuple/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhc
+$(DESTDIR)/$(PREFIX)/lib/xtuple/libxtuplewidgets.so: $(DESTDIR)/$(PREFIX)/lib/xtuple qt-client/widgets/libxtuplewidgets.so
+	install -m 755 -T qt-client/widgets/libxtuplewidgets.so $(DESTDIR)/$(PREFIX)/lib/xtuple/libxtuplewidgets.so ;
+
+$(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so: $(DESTDIR)/$(PREFIX)/lib/xtuple csvimp/plugins/libcsvimpplugin.so
+	install -m 755 -T csvimp/plugins/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so ;
+
+$(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhc
+	install -m 644 -T qt-client/share/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc ;
+
+$(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff: qt-client/hunspell/English.aff
+	install -m 644 -T qt-client/hunspell/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff ;
+
+$(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic: qt-client/hunspell/English.dic
+	install -m 644 -T qt-client/hunspell/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic ;
+
+$(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm: $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm ;
+	cd qt-client/share/dict/welcome && for file in *.qm ; do install -m 644 -T "$$file" $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/"$$file" ; done ;
 
 qt-client/share/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhcp
 	cd qt-client/share && qcollectiongenerator -o XTupleGUIClient.qhc XTupleGUIClient.qhcp ;
