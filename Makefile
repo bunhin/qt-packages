@@ -99,7 +99,7 @@ $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic: qt-client/hunspell/English.dic
 	install -m 644 -T qt-client/hunspell/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic ;
 
 $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm: $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm ;
-	cd qt-client/share/dict/welcome && for file in *.qm ; do install -m 644 -T "$$file" $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/"$$file" ; done ;
+	cd qt-client/share/dict/welcome && for file in *.qm ; do install -m 644 -T "$$file" ../../../../$(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/"$$file" ; done ;
 
 qt-client/share/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhcp
 	cd qt-client/share && qcollectiongenerator -o XTupleGUIClient.qhc XTupleGUIClient.qhcp ;
