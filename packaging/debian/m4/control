@@ -10,20 +10,25 @@ Source: PACKAGE_NAME
 Section: database
 Priority: optional
 Maintainer: Package Maintainer <packaging@xtuple.com>
-define(`BASE_DEPENDS',`Build-Depends: qt4-dev-tools, libqt4-dev, qt4-qmake, g++, gcc, m4')dnl
 Homepage: http://www.xtuple.com
 ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')')dnl
-ifelse(BINARY, 1, `',`
-')dnl
-Package: PACKAGE_NAME
+
+Package: PACKAGE_NAME`'-client
 Version: PACKAGE_VERSION
-Architecture: ifelse(BINARY, 1,`BINARY_TARGET',`i386 amd64 powerpc')
-Depends: libgcc1`'dnl
-ifelse(CLIENT, 1, `, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns', `')`'dnl
-ifelse(SERVER, 1, `, postgresql', `')
-Breaks: PACKAGE_NAME (<< PACKAGE_VERSION)
-Conflicts: PACKAGE_NAME (<< PACKAGE_VERSION)
-Provides: PACKAGE_NAME
-ifelse(BINARY, 1, `Installed-Size: DISK_SIZE', `')dnl
+Architecture: any
+Depends: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns', `')`'dnl
+Breaks: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
+Conflicts: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
+Provides: PACKAGE_NAME`'-client
 Description: xTuple provides integrated ERP and CRM functionality in a single cross-platform product.
+
+Package: PACKAGE_NAME`'-server
+Version: PACKAGE_VERSION
+Architecture: any
+Depends: postgresql
+Breaks: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
+Conflicts: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
+Provides: PACKAGE_NAME`'-server
+Description: xTuple provides integrated ERP and CRM functionality in a single cross-platform product.
+
 

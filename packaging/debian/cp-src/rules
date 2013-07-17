@@ -8,7 +8,8 @@ clean:
 install: build
 	dh_clean
 	dh_installdirs
-	$(MAKE) DESTDIR=$(CURDIR)/debian/$(pkgname) install
+	$(MAKE) CLIENT=1 SERVER=0 DESTDIR=$(CURDIR)/debian/$(pkgname)-client install
+	$(MAKE) CLIENT=0 SERVER=1 DESTDIR=$(CURDIR)/debian/$(pkgname)-server install
 
 build:
 	$(MAKE)

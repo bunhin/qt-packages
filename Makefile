@@ -8,7 +8,7 @@ ifneq ($(UBUNTU_RELEASE),)
 DEB_VERSION_TRAILER:=0ubuntu1~$(UBUNTU_RELEASE)
 DEB_OS_RELEASE:=$(UBUNTU_RELEASE)
 endif
-PRODUCT_NAME:=xtuple-client
+PRODUCT_NAME:=xtuple
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
 DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(DEB_VERSION_TRAILER)
@@ -60,7 +60,15 @@ pkgstage/debian: pkgstage
 debian:
 	mkdir -p debian ;
 
-install: $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm
+ifeq(CLIENT,0)
+ifeq(SERVER,1)
+install:
+else
+install:
+endif
+else
+install: $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(PREFIX)/lib/xtuple/welcome/wmsg.base.qm
+endif
 
 $(DESTDIR)/$(PREFIX)/bin:
 	mkdir -p $(DESTDIR)/$(PREFIX)/bin ;
@@ -107,30 +115,22 @@ qt-client/share/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhcp
 qt-client/share/dict/welcome/wmsg.base.qm: qt-client/share/dict/welcome/wmsg.base.ts
 	cd qt-client/share/dict/welcome ; lrelease *.ts ;
 
-install-deb:
-	$(MAKE) PREFIX=$(INT_PREFIX) DESTDIR=pkgstage/debian install ;
-
 $(DEB_CHANGELOG_FILE): debian qt-client/guiclient/version.cpp
 	echo "$(PRODUCT_NAME)"" (""$(DEB_PACKAGE_VERSION)"") ""$(DEB_OS_RELEASE)""; urgency=low" > "$(DEB_CHANGELOG_FILE)" ;
 	echo "" >> "$(DEB_CHANGELOG_FILE)" ;
 	echo "  * Release." >> "$(DEB_CHANGELOG_FILE)" ;
 	echo "" >> "$(DEB_CHANGELOG_FILE)" ;
 	echo " -- ""$(PACKAGER_NAME)"" <""$(PACKAGER_MAIL)"">  ""$(CHANGELOG_TIMESTAMP)" >> "$(DEB_CHANGELOG_FILE)" ;
-
-deb-bin-control: debian $(DEB_CHANGELOG_FILE)
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=1" -D "BINARY_TARGET=$(BINARY_TARGET)" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
-	for file in packaging/debian/cp/* ; do cp -pRP "$file" debian/"`basename "$$file"`" ; done ;
-
 deb-src-control: debian $(DEB_CHANGELOG_FILE)
-	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" < "$$file" > debian/"`basename "$$file"`" ; done ;
+	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src: deb-src-control
 	yes | debuild -S -sa ;
 
-deb-bin: install-deb
+deb:
+	yes | debuild ;
 
-deb: deb-bin
 
 	
