@@ -10,3 +10,6 @@
 [submodule "updater"]
 	path = updater
 	url = https://github.com/xtuple/updater
+[submodule "database"]
+	path = database
+	url = https://github.com/xtuple/database.git
