@@ -60,8 +60,8 @@ pkgstage/debian: pkgstage
 debian:
 	mkdir -p debian ;
 
-ifeq(CLIENT,0)
-ifeq(SERVER,1)
+ifeq ($(CLIENT),0)
+ifeq ($(SERVER),1)
 install:
 else
 install:
