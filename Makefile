@@ -14,7 +14,7 @@ PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _V
 DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(DEB_VERSION_TRAILER)
 CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -0500
-PACKAGER_NAME:=xTuple Packaging
+PACKAGER_NAME:=Package Maintainer
 PACKAGER_MAIL:=packaging@xtuple.com
 
 DEB_CHANGELOG_FILE=debian/changelog
