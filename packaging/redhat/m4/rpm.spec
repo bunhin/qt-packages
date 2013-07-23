@@ -13,10 +13,7 @@ Release: 1
 License: Common Public Attribution License Version 1
 Vendor: xTuple
 URL: http://www.xtuple.com
-Packager: xTuple Packaging <packaging@xtuple.com>
-Requires: libgcc1`'dnl
-ifelse(CLIENT, 1, `, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns', `')`'dnl
-ifelse(SERVER, 1, `, postgresql, postgresql-contrib', `')
+Packager: Package Maintainer <packaging@xtuple.com>
 
 %package client
 Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns
@@ -37,6 +34,8 @@ xTuple is an ERP system.
 %files client
 %defattr(-,root,root)
 %dir %attr(0755,root,root) PREFIX`'/lib/xtuple
+%attr(0755,root,root) PREFIX`'/bin/xtuple
+%attr(0755,root,root) PREFIX`'/lib/xtuple/xtuple
 %attr(0755,root,root) PREFIX`'/lib/xtuple/xtuple.bin
 %attr(0755,root,root) PREFIX`'/lib/xtuple/openrpt.bin
 %attr(0755,root,root) PREFIX`'/lib/xtuple/xtuple-updater.bin
@@ -48,7 +47,7 @@ xTuple is an ERP system.
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
 %package server
-Requires: postgresql
+Requires: postgresql postgresql-contrib
 
 %description server
 xTuple is an ERP system.

@@ -67,7 +67,7 @@ else
 install:
 endif
 else
-install: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome/wmsg.base.qm
+install: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/openrpt.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple-updater.bin $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/libcsvimpplugin.so $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/XTupleGUIClient.qhc $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/English.aff $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/English.dic $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome/wmsg.base.qm $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple $(DESTDIR)/$(INT_PREFIX)/bin/xtuple
 endif
 
 $(DESTDIR)/$(INT_PREFIX)/bin:
@@ -75,6 +75,12 @@ $(DESTDIR)/$(INT_PREFIX)/bin:
 
 $(DESTDIR)/$(INT_PREFIX)/lib:
 	mkdir -p $(DESTDIR)/$(INT_PREFIX)/lib ;
+
+$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple qt-client/xtuple
+	install -m 755 -T qt-client/xtuple $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple ;
+
+$(DESTDIR)/$(INT_PREFIX)/bin/xtuple: $(DESTDIR)/$(INT_PREFIX)/bin
+	cd $(DESTDIR)/$(INT_PREFIX)/bin ; ln -s ../lib/xtuple/xtuple xtuple ;
 
 $(DESTDIR)/$(INT_PREFIX)/lib/xtuple:
 	mkdir -p $(DESTDIR)/$(INT_PREFIX)/lib/xtuple ;
