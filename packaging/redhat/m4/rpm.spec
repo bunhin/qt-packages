@@ -16,7 +16,7 @@ URL: http://www.xtuple.com
 Packager: Package Maintainer <packaging@xtuple.com>
 
 %package client
-Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns
+Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql
 
 %description client
 xTuple is an ERP system.

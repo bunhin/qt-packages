@@ -16,7 +16,7 @@ ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-de
 Package: PACKAGE_NAME`'-client
 Version: PACKAGE_VERSION
 Architecture: any
-Depends: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns
+Depends: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql
 Breaks: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
 Conflicts: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
 Provides: PACKAGE_NAME`'-client
