@@ -11,7 +11,12 @@ endif
 PRODUCT_NAME:=xtuple
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
-DEB_PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(DEB_VERSION_TRAILER)
+ifneq ($(PACKAGE_TRAILER),)
+PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(PACKAGE_TRAILER)
+else
+PACKAGE_VERSION:=$(PRODUCT_VERSION)
+endif
+DEB_PACKAGE_VERSION:=$(PACKAGE_VERSION)-$(DEB_VERSION_TRAILER)
 CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -0500
 PACKAGER_NAME:=Package Maintainer
@@ -141,6 +146,8 @@ deb:
 
 rpm-src-control:
 	mkdir -p redhat ;
-	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PRODUCT_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
+	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
 
-	
+rpm-src:
+	cd .. ; cp -pRP qt-packages/redhat/*.spec ./ ; cp -pRP qt-packages $(PACKAGE_NAME)-$(PACKAGE_VERSION) ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PACKAGE_VERSION) ;
+

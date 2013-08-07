@@ -14,9 +14,21 @@ License: Common Public Attribution License Version 1
 Vendor: xTuple
 URL: http://www.xtuple.com
 Packager: Package Maintainer <packaging@xtuple.com>
+Summary: xTuple ERP
+Source: PACKAGE_NAME`'-`'PACKAGE_VERSION
+
+%prep
+%setup
+
+%install client
+make install DESTDIR="$RPM_BUILD_ROOT" ;
+
+%description
+xTuple is an ERP system.
 
 %package client
 Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql
+Summary: xTuple client
 
 %description client
 xTuple is an ERP system.
@@ -46,11 +58,9 @@ xTuple is an ERP system.
 %dir %attr(0755,root,root) PREFIX`'/lib/xtuple/welcome
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
-%install
-make install DESTDIR="$RPM_BUILD_ROOT" ;
-
 %package server
 Requires: postgresql postgresql-contrib
+Summary: xTuple ERP
 
 %description server
 xTuple is an ERP system.
