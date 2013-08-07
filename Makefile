@@ -127,6 +127,7 @@ $(DEB_CHANGELOG_FILE): debian qt-client/guiclient/version.cpp
 	echo "  * Release." >> "$(DEB_CHANGELOG_FILE)" ;
 	echo "" >> "$(DEB_CHANGELOG_FILE)" ;
 	echo " -- ""$(PACKAGER_NAME)"" <""$(PACKAGER_MAIL)"">  ""$(CHANGELOG_TIMESTAMP)" >> "$(DEB_CHANGELOG_FILE)" ;
+
 deb-src-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(DEB_PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > debian/"`basename "$$file"`" ; done ;
 	for file in packaging/debian/cp/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
@@ -138,5 +139,8 @@ deb-src: deb-src-control
 deb:
 	yes | debuild ;
 
+rpm-src-control:
+	mkdir -p rpm ;
+	for file in packaging/rpm/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PRODUCT_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > rpm/"`basename "$$file"`" ; done ;
 
 	

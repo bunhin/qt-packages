@@ -46,6 +46,9 @@ xTuple is an ERP system.
 %dir %attr(0755,root,root) PREFIX`'/lib/xtuple/welcome
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
+%install
+make install DESTDIR="$RPM_BUILD_ROOT" ;
+
 %package server
 Requires: postgresql postgresql-contrib
 
