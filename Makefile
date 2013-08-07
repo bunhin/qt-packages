@@ -140,7 +140,7 @@ deb:
 	yes | debuild ;
 
 rpm-src-control:
-	mkdir -p rpm ;
-	for file in packaging/rpm/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PRODUCT_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > rpm/"`basename "$$file"`" ; done ;
+	mkdir -p redhat ;
+	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PRODUCT_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
 
 	
