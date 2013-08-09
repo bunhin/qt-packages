@@ -12,6 +12,7 @@ PRODUCT_NAME:=xtuple
 FAKE_PRODUCT_NAME:=qt-packages
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
+PACKAGE_TRAILER?=
 ifneq ($(PACKAGE_TRAILER),)
 PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(PACKAGE_TRAILER)
 else
