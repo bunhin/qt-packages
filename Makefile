@@ -124,13 +124,13 @@ $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/English.dic: qt-client/hunspell/English.dic
 $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome/wmsg.base.qm: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome qt-client/share/dict/welcome/wmsg.base.qm ;
 	cd qt-client/share/dict/welcome && for file in *.qm ; do if [ "`echo "$(DESTDIR)" | grep '^\/'`" != "" ] ; then install -m 644 -T "$$file" $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome/"$$file" ; else install -m 644 -T "$$file" ../../../../$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/welcome/"$$file" ; fi ; done ;
 
-$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/database_setup.sh:
+$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/database_setup.sh: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple
 	install -m 755 -T packaging/general/cp/database_setup.sh $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/database_setup.sh ;
 
-$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/init.sql:
+$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/init.sql: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple
 	install -m 644 -T packaging/general/cp/init.sql $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/init.sql ;
 
-$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup:
+$(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple
 	install -m 644 -T database/dbscripts/misc/postbooks_quickstart.backup $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup ;
 
 qt-client/share/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhcp

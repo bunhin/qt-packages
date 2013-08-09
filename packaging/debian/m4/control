@@ -11,7 +11,7 @@ Section: database
 Priority: optional
 Maintainer: Package Maintainer <packaging@xtuple.com>
 Homepage: http://www.xtuple.com
-ifelse(BINARY, 1, `',`Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')')`'dnl
+Build-Depends: m4`'ifelse(CLIENT, 1,`, g++, gcc, libqt4-dev, qt4-qmake, libpq-dev',`')`'dnl
 
 Package: PACKAGE_NAME`'-client
 Version: PACKAGE_VERSION
