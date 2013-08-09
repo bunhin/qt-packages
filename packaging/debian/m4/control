@@ -31,4 +31,12 @@ Conflicts: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
 Provides: PACKAGE_NAME`'-server
 Description: xTuple provides integrated ERP and CRM functionality in a single cross-platform product.
 
+Package: PACKAGE_NAME`'-database
+Version: PACKAGE_VERSION
+Architecture: any
+Depends: 
+Breaks: PACKAGE_NAME`'-database (<< PACKAGE_VERSION)
+Conflicts: PACKAGE_NAME`'-database (<< PACKAGE_VERSION)
+Provides: PACKAGE_NAME`'-database
+Description: xTuple provides integrated ERP and CRM functionality in a single cross-platform product.
 

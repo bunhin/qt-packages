@@ -20,18 +20,18 @@ Source: PACKAGE_NAME`'-`'PACKAGE_VERSION
 %prep
 %setup
 
-%install client
-make install DESTDIR="$RPM_BUILD_ROOT" ;
-
 %description
 xTuple is an ERP system.
 
 %package client
-Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql
+Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql, xtuple-database
 Summary: xTuple client
 
 %description client
 xTuple is an ERP system.
+
+%install client
+make install CLIENT=1 SERVER=0 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
 
 %pre client
 
@@ -59,15 +59,19 @@ xTuple is an ERP system.
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
 %package server
-Requires: postgresql postgresql-contrib
-Summary: xTuple ERP
+Requires: postgresql postgresql-contrib xtuple-database
+Summary: xTuple server
 
 %description server
 xTuple is an ERP system.
 
+%install server
+make install CLIENT=0 SERVER=1 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
+
 %pre server
 
 %post server
+echo "In order to configure the xTuple server automatically, run PREFIX`'/lib/xtuple/database_setup.sh when all installations complete." ;
 
 %preun server
 
@@ -76,4 +80,29 @@ xTuple is an ERP system.
 %clean server
 
 %files server
+
+%package database
+Requires: 
+Summary: xTuple database utilities
+
+%description database
+xTuple is an ERP system.
+
+%install database
+make install CLIENT=0 SERVER=0 DATABASE=1 DESTDIR="$RPM_BUILD_ROOT" ;
+
+%pre database
+
+%post database
+
+%preun database
+
+%postun database
+
+%clean database
+
+%files database
+%attr(0755,root,root) PREFIX`'/lib/xtuple/database_setup.sh
+%attr(0644,root,root) PREFIX`'/lib/xtuple/init.sql
+%attr(0644,root,root) PREFIX`'/lib/xtuple/postbooks_quickstart.backup
 
