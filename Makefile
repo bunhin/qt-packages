@@ -91,7 +91,7 @@ $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple 
 	install -m 755 -T qt-client/xtuple $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/xtuple ;
 
 $(DESTDIR)/$(INT_PREFIX)/bin/xtuple: $(DESTDIR)/$(INT_PREFIX)/bin
-	cd $(DESTDIR)/$(INT_PREFIX)/bin ; ln -s ../lib/xtuple/xtuple xtuple ;
+	install -m 755 -T packaging/general/cp/launcher.sh $(DESTDIR)/$(INT_PREFIX)/bin/xtuple ;
 
 $(DESTDIR)/$(INT_PREFIX)/lib/xtuple:
 	mkdir -p $(DESTDIR)/$(INT_PREFIX)/lib/xtuple ;
