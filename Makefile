@@ -9,6 +9,7 @@ DEB_VERSION_TRAILER:=0ubuntu1~$(UBUNTU_RELEASE)
 DEB_OS_RELEASE:=$(UBUNTU_RELEASE)
 endif
 PRODUCT_NAME:=xtuple
+FAKE_PRODUCT_NAME:=qt-packages
 PACKAGE_NAME:=$(PRODUCT_NAME)
 PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _Version/ { printf "%s" , $$4 ; }' | sed -e 's/^\"//g' -e 's/\";\?$$//g')
 ifneq ($(PACKAGE_TRAILER),)
@@ -152,15 +153,15 @@ deb-src-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src: deb-src-control
-	yes | debuild -S -sa ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME) ; fi ; cd $(PACKAGE_NAME) ; yes | debuild -S -sa ;
 
 deb:
-	yes | debuild ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME) ; fi ; cd $(PACKAGE_NAME) ; yes | debuild ;
 
 rpm-src-control:
 	mkdir -p redhat ;
 	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
 
 rpm-src: rpm-src-control
-	cd .. ; cp -pRP qt-packages/redhat/rpm.spec ./$(PACKAGE_NAME)-$(PACKAGE_VERSION).spec ; cp -pRP qt-packages $(PACKAGE_NAME)-$(PACKAGE_VERSION) ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PACKAGE_VERSION) ;
+	cd .. ; cp -pRP $(FAKE_PRODUCT_NAME)/redhat/rpm.spec ./$(PACKAGE_NAME)-$(PACKAGE_VERSION).spec ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PACKAGE_VERSION) ; fi ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PACKAGE_VERSION) ;
 
