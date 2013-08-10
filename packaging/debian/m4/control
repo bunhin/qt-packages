@@ -11,7 +11,7 @@ Section: database
 Priority: optional
 Maintainer: Package Maintainer <packaging@xtuple.com>
 Homepage: http://www.xtuple.com
-Build-Depends: m4, g++, gcc, debhelper, libqt4-dev, qt4-qmake, libpq-dev
+Build-Depends: m4, g++, gcc, debhelper, libqt4-dev, qt4-qmake, libpq-dev, libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql
 
 Package: PACKAGE_NAME`'-client
 Version: PACKAGE_VERSION
