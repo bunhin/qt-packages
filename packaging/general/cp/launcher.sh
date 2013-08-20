@@ -1,3 +1,3 @@
 #!/bin/sh
-../lib/xtuple/xtuple ;
+"`dirname "$0"`"/../lib/xtuple/xtuple ;
 
