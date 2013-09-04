@@ -133,7 +133,7 @@ $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/init.sql: $(DESTDIR)/$(INT_PREFIX)/lib/xtupl
 	install -m 644 -T packaging/general/cp/init.sql $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/init.sql ;
 
 $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup: $(DESTDIR)/$(INT_PREFIX)/lib/xtuple
-	install -m 644 -T database/dbscripts/misc/postbooks_quickstart.backup $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup ;
+	install -m 644 -T database/backups/postbooks_quickstart-$(PRODUCT_VERSION).backup $(DESTDIR)/$(INT_PREFIX)/lib/xtuple/postbooks_quickstart.backup ;
 
 qt-client/share/XTupleGUIClient.qhc: qt-client/share/XTupleGUIClient.qhcp
 	cd qt-client/share && qcollectiongenerator -o XTupleGUIClient.qhc XTupleGUIClient.qhcp ;
