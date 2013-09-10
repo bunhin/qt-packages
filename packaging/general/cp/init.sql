@@ -12,7 +12,7 @@ CREATE GROUP xtrole;
 -- permissions.  Place the user in the xtrole group and
 -- set the password to the default of admin.
 --
-CREATE USER xtadmin WITH PASSWORD 'xtadmin'
+CREATE USER admin WITH PASSWORD 'xtadmin'
                        CREATEDB CREATEUSER
                        IN GROUP xtrole;
 
