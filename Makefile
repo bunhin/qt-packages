@@ -15,8 +15,10 @@ PRODUCT_VERSION:=$(shell cat qt-client/guiclient/version.cpp | awk '/^QString _V
 PACKAGE_TRAILER?=
 ifneq ($(PACKAGE_TRAILER),)
 PACKAGE_VERSION:=$(PRODUCT_VERSION)-$(PACKAGE_TRAILER)
+RELEASE_NUMBER:=$(PACKAGE_TRAILER)
 else
 PACKAGE_VERSION:=$(PRODUCT_VERSION)
+RELEASE_NUMBER:=1
 endif
 ifneq ($(DEB_VERSION_TRAILER),)
 DEB_PACKAGE_VERSION:=$(PACKAGE_VERSION)-$(DEB_VERSION_TRAILER)
@@ -165,7 +167,7 @@ deb:
 
 rpm-src-control:
 	mkdir -p redhat ;
-	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
+	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PACKAGE_VERSION=$(PRODUCT_VERSION)" -D "RELEASE_NUMBER=$(RELEASE_NUMBER)" -D "BINARY=0" -D "CLIENT=1" -D "SERVER=0" -D "PREFIX=$(PREFIX)" < "$$file" > redhat/"`basename "$$file"`" ; done ;
 
 rpm-src: rpm-src-control
 	cd .. ; cp -pRP $(FAKE_PRODUCT_NAME)/redhat/rpm.spec ./$(PACKAGE_NAME)-$(PACKAGE_VERSION).spec ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PACKAGE_VERSION) ; fi ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PACKAGE_VERSION) ;

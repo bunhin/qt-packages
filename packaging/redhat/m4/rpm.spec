@@ -9,7 +9,7 @@ dnl   SERVER
 
 Name: PACKAGE_NAME
 Version: PACKAGE_VERSION
-Release: 1
+Release: RELEASE_NUMBER
 License: Common Public Attribution License Version 1
 Vendor: xTuple
 URL: http://www.xtuple.com
