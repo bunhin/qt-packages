@@ -1,6 +1,7 @@
 dnl This gets processed by m4.
 dnl Macros:
 dnl   PACKAGE_NAME
+dnl   PRODUCT_VERSION
 dnl   PACKAGE_VERSION
 dnl   BINARY
 dnl   BINARY_TARGET
@@ -8,7 +9,7 @@ dnl   CLIENT
 dnl   SERVER
 
 Name: PACKAGE_NAME
-Version: PACKAGE_VERSION
+Version: PRODUCT_VERSION
 Release: RELEASE_NUMBER
 License: Common Public Attribution License Version 1
 Vendor: xTuple
