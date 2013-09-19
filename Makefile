@@ -170,5 +170,5 @@ rpm-src-control:
 	for file in packaging/redhat/m4/* ; do m4 -D "PACKAGE_NAME=$(PACKAGE_NAME)" -D "PRODUCT_VERSION=$(PRODUCT_VERSION)" -D "PACKAGE_VERSION=$(PACKAGE_VERSION)" -D "RELEASE_NUMBER=$(RELEASE_NUMBER)" -D "BINARY=0" -D "BUILD_CLIENT=1" -D "BUILD_SERVER=0" -D "PREFIX=$(PREFIX)" -D "SOURCE_NAME=$(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz" < "$$file" > redhat/"`basename "$$file"`" ; done ;
 
 rpm-src: rpm-src-control
-	cd .. ; cp -pRP $(FAKE_PRODUCT_NAME)/redhat/rpm.spec ./$(PACKAGE_NAME)-$(PACKAGE_VERSION).spec ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)-$(PACKAGE_VERSION)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PACKAGE_VERSION) ; fi ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PACKAGE_VERSION) ;
+	cd .. ; cp -pRP $(FAKE_PRODUCT_NAME)/redhat/rpm.spec ./$(PACKAGE_NAME)-$(PACKAGE_VERSION).spec ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)-$(PACKAGE_VERSION)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; tar -czf $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz $(PACKAGE_NAME)-$(PRODUCT_VERSION) ;
 
