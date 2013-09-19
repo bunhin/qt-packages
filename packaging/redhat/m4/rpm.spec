@@ -5,9 +5,10 @@ dnl   PRODUCT_VERSION
 dnl   PACKAGE_VERSION
 dnl   BINARY
 dnl   BINARY_TARGET
-dnl   CLIENT
-dnl   SERVER
-
+dnl   BUILD_CLIENT
+dnl   BUILD_SERVER
+dnl   BUILD_DATABASE
+dnl
 Name: PACKAGE_NAME
 Version: PRODUCT_VERSION
 Release: RELEASE_NUMBER
@@ -16,7 +17,7 @@ Vendor: xTuple
 URL: http://www.xtuple.com
 Packager: Package Maintainer <packaging@xtuple.com>
 Summary: xTuple ERP
-Source: PACKAGE_NAME`'-`'PACKAGE_VERSION
+Source: SOURCE_NAME`'.tar.gz
 
 %prep
 %setup
@@ -31,9 +32,6 @@ Summary: xTuple client
 %description client
 xTuple is an ERP system.
 
-%install client
-make install CLIENT=1 SERVER=0 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
-
 %pre client
 
 %post client
@@ -41,8 +39,6 @@ make install CLIENT=1 SERVER=0 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
 %preun client
 
 %postun client
-
-%clean client
 
 %files client
 %defattr(-,root,root)
@@ -66,9 +62,6 @@ Summary: xTuple server
 %description server
 xTuple is an ERP system.
 
-%install server
-make install CLIENT=0 SERVER=1 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
-
 %pre server
 
 %post server
@@ -78,19 +71,13 @@ echo "In order to configure the xTuple server automatically, run PREFIX`'/lib/xt
 
 %postun server
 
-%clean server
-
 %files server
 
 %package database
-Requires: 
 Summary: xTuple database utilities
 
 %description database
 xTuple is an ERP system.
-
-%install database
-make install CLIENT=0 SERVER=0 DATABASE=1 DESTDIR="$RPM_BUILD_ROOT" ;
 
 %pre database
 
@@ -100,10 +87,16 @@ make install CLIENT=0 SERVER=0 DATABASE=1 DESTDIR="$RPM_BUILD_ROOT" ;
 
 %postun database
 
-%clean database
-
 %files database
 %attr(0755,root,root) PREFIX`'/lib/xtuple/database_setup.sh
 %attr(0644,root,root) PREFIX`'/lib/xtuple/init.sql
 %attr(0644,root,root) PREFIX`'/lib/xtuple/postbooks_quickstart.backup
+
+%clean
+make clean ;
+
+%install
+make install CLIENT=1 SERVER=0 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
+make install CLIENT=0 SERVER=1 DATABASE=0 DESTDIR="$RPM_BUILD_ROOT" ;
+make install CLIENT=0 SERVER=0 DATABASE=1 DESTDIR="$RPM_BUILD_ROOT" ;
 
