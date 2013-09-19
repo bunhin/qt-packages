@@ -17,7 +17,7 @@ Vendor: xTuple
 URL: http://www.xtuple.com
 Packager: Package Maintainer <packaging@xtuple.com>
 Summary: xTuple ERP
-Source: SOURCE_NAME`'.tar.gz
+Source: SOURCE_NAME
 
 %prep
 %setup
