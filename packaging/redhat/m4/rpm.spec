@@ -18,6 +18,7 @@ URL: http://www.xtuple.com
 Packager: Package Maintainer <packaging@xtuple.com>
 Summary: xTuple ERP
 Source: SOURCE_NAME
+Group: Applications/Databases
 
 %prep
 %setup
