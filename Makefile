@@ -160,10 +160,10 @@ deb-src-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src: deb-src-control
-	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME) ; fi ; cd $(PACKAGE_NAME) ; yes | debuild -S -sa ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild -S -sa ;
 
 deb:
-	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME) ; fi ; cd $(PACKAGE_NAME) ; yes | debuild ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild ;
 
 rpm-src-control:
 	mkdir -p redhat ;
