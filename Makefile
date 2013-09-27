@@ -30,6 +30,8 @@ CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -0500
 PACKAGER_NAME:=Package Maintainer
 PACKAGER_MAIL:=packaging@xtuple.com
 
+QMAKE:=qmake-qt4
+
 DEB_CHANGELOG_FILE=debian/changelog
 
 all: openrpt/bin/openrpt csvimp/csvimp qt-client/bin/xtuple updater/bin/updater
@@ -41,16 +43,16 @@ clean:
 	cd updater && make clean || echo No Makefile. ;
 
 openrpt/Makefile:
-	cd openrpt && qmake ;
+	cd openrpt && $(QMAKE) ;
 
 csvimp/Makefile: openrpt/bin/openrpt
-	cd csvimp && qmake ;
+	cd csvimp && $(QMAKE) ;
 
 qt-client/Makefile: csvimp/csvimp openrpt/bin/openrpt
-	cd qt-client && ( for dir in openrpt csvimp xtlib ; do if [ -e "$$dir" ] && [ ! -e "$$dir"/* ] ; then rmdir "$$dir" ; fi ; done ; ) && qmake ;
+	cd qt-client && ( for dir in openrpt csvimp xtlib ; do if [ -e "$$dir" ] && [ ! -e "$$dir"/* ] ; then rmdir "$$dir" ; fi ; done ; ) && $(QMAKE) ;
 
 updater/Makefile: openrpt/bin/openrpt qt-client/bin/xtuple
-	cd updater && qmake ;
+	cd updater && $(QMAKE) ;
 
 openrpt/bin/openrpt: openrpt/Makefile
 	cd openrpt && make ;

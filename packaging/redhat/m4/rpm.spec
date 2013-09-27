@@ -19,6 +19,7 @@ Packager: Package Maintainer <packaging@xtuple.com>
 Summary: xTuple ERP
 Source: SOURCE_NAME
 Group: Applications/Databases
+BuildRequires: m4, gcc, gcc-c++, zlib-devel, postgresql-devel, qt4-devel, qtwebkit-devel
 
 %prep
 %setup
@@ -27,7 +28,7 @@ Group: Applications/Databases
 xTuple is an ERP system.
 
 %package client
-Requires: libgcc1, libpq5, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql-psql, xtuple-database
+Requires: libgcc, libstdc++, zlib, postgresql-libs, qt, qt-x11, qt-postgresql, qtwebkit, xtuple-database
 Summary: xTuple client
 
 %description client
@@ -57,7 +58,7 @@ xTuple is an ERP system.
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
 %package server
-Requires: postgresql postgresql-contrib xtuple-database
+Requires: postgresql postgresql-server postgresql-contrib xtuple-database
 Summary: xTuple server
 
 %description server
