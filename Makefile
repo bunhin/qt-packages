@@ -29,6 +29,11 @@ CHANGELOG_TIME:=$(shell date "+%a, %d %b %Y %H:%M:%S")
 CHANGELOG_TIMESTAMP:=$(CHANGELOG_TIME) -0500
 PACKAGER_NAME:=Package Maintainer
 PACKAGER_MAIL:=packaging@xtuple.com
+SIGN_PKG?=1
+DEBUILD_FLAGS?=
+ifeq ($(SIGN_PKG),0)
+DEBUILD_FLAGS+= -us -uc
+endif
 
 QMAKE:=qmake-qt4
 
@@ -162,10 +167,10 @@ deb-src-control: debian $(DEB_CHANGELOG_FILE)
 	for file in packaging/debian/cp-src/* ; do cp -pRP "$$file" debian/"`basename "$$file"`" ; done ;
 
 deb-src: deb-src-control
-	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild -S -sa ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild -S -sa $(DEBUILD_FLAGS) ;
 
 deb:
-	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild ;
+	cd .. ; if [ "$(FAKE_PRODUCT_NAME)" != "$(PACKAGE_NAME)" ] ; then cp -pRP $(FAKE_PRODUCT_NAME) $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; fi ; cd $(PACKAGE_NAME)-$(PRODUCT_VERSION) ; yes | debuild $(DEBUILD_FLAGS) ;
 
 rpm-src-control:
 	mkdir -p redhat ;
