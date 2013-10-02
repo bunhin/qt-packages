@@ -25,7 +25,7 @@ Description: xTuple provides integrated ERP and CRM functionality in a single cr
 Package: PACKAGE_NAME`'-server
 Version: PACKAGE_VERSION
 Architecture: any
-Depends: postgresql, postgresql-contrib, PACKAGE_NAME`'-database (PACKAGE_VERSION)
+Depends: postgresql, postgresql-contrib, PACKAGE_NAME`'-database (= PACKAGE_VERSION)
 Breaks: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
 Conflicts: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
 Provides: PACKAGE_NAME`'-server
