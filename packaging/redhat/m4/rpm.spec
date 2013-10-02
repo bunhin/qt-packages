@@ -28,7 +28,8 @@ BuildRequires: m4, gcc, gcc-c++, zlib-devel, postgresql-devel, qt4-devel, qtwebk
 xTuple is an ERP system.
 
 %package client
-Requires: libgcc, libstdc++, zlib, postgresql-libs, qt, qt-x11, qt-postgresql, qtwebkit, xtuple-database
+AutoReq: no
+Requires: libgcc, libstdc++, zlib, postgresql-libs, qt, qt-x11, qt-postgresql, qtwebkit, xtuple-database = PRODUCT_VERSION
 Summary: xTuple client
 
 %description client
@@ -58,7 +59,8 @@ xTuple is an ERP system.
 %attr(0644,root,root) PREFIX`'/lib/xtuple/welcome/*.qm
 
 %package server
-Requires: postgresql postgresql-server postgresql-contrib xtuple-database
+AutoReq: no
+Requires: postgresql, postgresql-server, postgresql-contrib, xtuple-database = PRODUCT_VERSION
 Summary: xTuple server
 
 %description server
@@ -76,6 +78,7 @@ echo "In order to configure the xTuple server automatically, run PREFIX`'/lib/xt
 %files server
 
 %package database
+AutoReq: no
 Summary: xTuple database utilities
 
 %description database

@@ -16,7 +16,7 @@ Build-Depends: m4, g++, gcc, debhelper, libqt4-dev, qt4-qmake, libpq-dev, libgcc
 Package: PACKAGE_NAME`'-client
 Version: PACKAGE_VERSION
 Architecture: any
-Depends: libgcc1, libstdc++6, libpq5, libsqlite3-0, libz1, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-scripttools, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql, libqt4-sql-psql, PACKAGE_NAME`'-database
+Depends: libgcc1, libstdc++6, libpq5, libsqlite3-0, libz1, libqt4-core, libqt4-core, libqt4-designer, libqt4-gui, libqt4-help, libqt4-network, libqt4-script, libqt4-scripttools, libqt4-svg, libqt4-webkit, libqt4-xml, libqt4-xmlpatterns, libqt4-sql, libqt4-sql-psql, PACKAGE_NAME`'-database (= PACKAGE_VERSION)
 Breaks: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
 Conflicts: PACKAGE_NAME`'-client (<< PACKAGE_VERSION)
 Provides: PACKAGE_NAME`'-client
@@ -25,7 +25,7 @@ Description: xTuple provides integrated ERP and CRM functionality in a single cr
 Package: PACKAGE_NAME`'-server
 Version: PACKAGE_VERSION
 Architecture: any
-Depends: postgresql, postgresql-contrib, PACKAGE_NAME`'-database
+Depends: postgresql, postgresql-contrib, PACKAGE_NAME`'-database (PACKAGE_VERSION)
 Breaks: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
 Conflicts: PACKAGE_NAME`'-server (<< PACKAGE_VERSION)
 Provides: PACKAGE_NAME`'-server
