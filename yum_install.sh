@@ -47,9 +47,11 @@ ACEOF
 	yum install xtuple-client xtuple-database xtuple-server yum-plugin-versionlock ;
 	# Lock the package versions of all xtuple versions so as to avert database mismatches.
 	yum versionlock add xtuple-client xtuple-database xtuple-server ;
-	# Start the PostgreSQL service .
+	# Initialize PostgreSQL.
+	service postgresql initdb ;
+	# Start the PostgreSQL service.
 	/etc/init.d/postgresql start &&
-	# Wait for PostgreSQL to really start .
+	# Wait for PostgreSQL to really start.
 	sleep 8 &&
 	# Create and provision the xTuple database with standard options.
 	/usr/lib/xtuple/database_setup.sh ;
