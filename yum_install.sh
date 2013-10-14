@@ -2,6 +2,7 @@
 # This attempts to install xTuple on a yum-enabled system. Production deployments might benefit from a more manual approach than running this script in its entirety.
 
 export yumrepopath="http://www.xtuple.org/sites/default/files/build/dist" ;
+export yumfamily="`uname -m | sed -e 's/^i[34567]86$/i386/g'`" ;
 
 # We check whether present repositories provide qtwebkit.
 yum info qtwebkit > /dev/null 2> /dev/null ;
@@ -11,16 +12,16 @@ then
 	# Try to add EPEL in order to satisfy the missing dependency if appropriate.
 	if [ "`grep '^CentOS release 5[\. ]' /etc/redhat-release`" != "" ] ;
 	then
-		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/5/`uname -m`/epel-release-5-4.noarch.rpm && sudo rpm -Uvh epel-release-5-4.noarch.rpm && rm epel-release-5-4.noarch.rpm epel-dl.log ; )
+		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/5/"$yumfamily"/epel-release-5-4.noarch.rpm && sudo rpm -Uvh epel-release-5-4.noarch.rpm && rm epel-release-5-4.noarch.rpm epel-dl.log ; )
 	elif [ "`grep '^CentOS release 6[\. ]' /etc/redhat-release`" != "" ] ;
 	then
-		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/6/`uname -m`/epel-release-6-8.noarch.rpm && sudo rpm -Uvh epel-release-6-8.noarch.rpm && rm epel-release-6-8.noarch.rpm epel-dl.log ; )
+		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/6/"$yumfamily"/epel-release-6-8.noarch.rpm && sudo rpm -Uvh epel-release-6-8.noarch.rpm && rm epel-release-6-8.noarch.rpm epel-dl.log ; )
 	elif [ "`grep '^Red Hat [A-Za-z ]*release 5[\. ]' /etc/redhat-release`" != "" ] ;
 	then
-		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/5/`uname -m`/epel-release-5-4.noarch.rpm && sudo rpm -Uvh epel-release-5-4.noarch.rpm && rm epel-release-5-4.noarch.rpm epel-dl.log ; )
+		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/5/"$yumfamily"/epel-release-5-4.noarch.rpm && sudo rpm -Uvh epel-release-5-4.noarch.rpm && rm epel-release-5-4.noarch.rpm epel-dl.log ; )
 	elif [ "`grep '^Red Hat [A-Za-z ]*release 6[\. ]' /etc/redhat-release`" != "" ] ;
 	then
-		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/6/`uname -m`/epel-release-6-8.noarch.rpm && sudo rpm -Uvh epel-release-6-8.noarch.rpm && rm epel-release-6-8.noarch.rpm epel-dl.log ; )
+		( cd /tmp && wget -a epel-dl.log http://dl.fedoraproject.org/pub/epel/6/"$yumfamily"/epel-release-6-8.noarch.rpm && sudo rpm -Uvh epel-release-6-8.noarch.rpm && rm epel-release-6-8.noarch.rpm epel-dl.log ; )
 	else
 		echo "There is no built-in rule for this system. Please add the correct epel repository for your system and try again." ;
 	fi ;
