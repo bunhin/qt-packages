@@ -1,0 +1,15 @@
+[submodule "qt-client"]
+	path = qt-client
+	url = https://github.com/xtuple/qt-client
+[submodule "openrpt"]
+	path = openrpt
+	url = https://github.com/xtuple/openrpt
+[submodule "csvimp"]
+	path = csvimp
+	url = https://github.com/xtuple/csvimp
+[submodule "updater"]
+	path = updater
+	url = https://github.com/xtuple/updater
+[submodule "database"]
+	path = database
+	url = https://github.com/xtuple/database.git
